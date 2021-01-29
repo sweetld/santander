@@ -18,15 +18,15 @@ public class Consumer {
 
     public void onMessage(String message) {
         log.info("Received Message: {}", message);
-        StringReader reader = new StringReader(message);
-        List<Price> prices = new CsvToBeanBuilder<Price>(reader)
-            .withOrderedResults(true)
-            .withType(Price.class)
-            .withIgnoreLeadingWhiteSpace(true)
-            .withIgnoreEmptyLine(true)
-            .build()
-            .parse();
-        reader.close();
-        prices.forEach(priceService::offer);
+        try (StringReader reader = new StringReader(message)) {
+            List<Price> prices = new CsvToBeanBuilder<Price>(reader)
+                .withOrderedResults(true)
+                .withType(Price.class)
+                .withIgnoreLeadingWhiteSpace(true)
+                .withIgnoreEmptyLine(true)
+                .build()
+                .parse();
+            prices.forEach(priceService::offer);
+        }
     }
 }

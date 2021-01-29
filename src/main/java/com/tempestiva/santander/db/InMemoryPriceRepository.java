@@ -5,10 +5,12 @@ import com.tempestiva.santander.model.Price;
 import org.springframework.stereotype.Repository;
 
 import java.util.EnumMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class InMemoryPriceRepository implements PriceRepository {
-    private final EnumMap<CCYPair, Price> fxPrices = new EnumMap<>(CCYPair.class);
+    private final Map<CCYPair, Price> fxPrices = new ConcurrentHashMap<>();
 
     @Override
     public Price getPriceFor(final CCYPair ccyPair) {

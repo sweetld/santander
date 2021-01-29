@@ -17,7 +17,7 @@ public class DummyProducer {
     private final Consumer consumer;
     private static long counter = 100;
 
-    @Scheduled(fixedRate = 3000, initialDelay = 3000)
+    @Scheduled(fixedRate = 1, initialDelay = 3000)
     public void sendPrice() {
         int ccyPairs = ThreadLocalRandom.current().nextInt(1, 3);
         StringBuilder sb = new StringBuilder();
